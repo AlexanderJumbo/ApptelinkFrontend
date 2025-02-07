@@ -1,0 +1,168 @@
+<app-navbar></app-navbar>
+<form [formGroup]="formGenerateOrder">
+  <div class="flex flex-col lg:flex-row w-full h-screen">
+    <!-- Lado izq: Formulario de Pedido -->
+    <div
+      class="lg:w-7/10 p-6 bg-white shadow-lg rounded-lg border border-gray-200 mx-4 my-4 lg:my-0"
+    >
+      <h2 class="text-2xl font-bold text-gray-800 mb-6">Crear Pedido</h2>
+
+      <div class="mb-6">
+        <label for="orderDate" class="block text-lg font-medium mb-2"
+          >Fecha</label
+        >
+        <input
+          type="text"
+          id="orderDate"
+          class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          formControlName="orderDate"
+        />
+      </div>
+
+      <div class="mb-6">
+        <label for="cliente" class="block text-lg font-medium mb-2"
+          >Cliente</label
+        >
+        <select
+          id="cliente"
+          class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          formControlName="cliente"
+        >
+          <option value="">Seleccionar Cliente</option>
+          <option *ngFor="let cliente of clientsList" [value]="cliente.id">
+            {{ cliente.name }} - {{ cliente.dni }}
+          </option>
+        </select>
+      </div>
+      <!-- Listado de productos -->
+      <h3 class="text-xl font-semibold mb-4">Productos</h3>
+
+      <div class="flex justify-center mt-4 mb-4">
+        <nav class="inline-flex items-center space-x-2">
+          <button
+            (click)="goToPage(pageNumber - 1)"
+            [disabled]="pageNumber === 0"
+            class="px-3 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
+          >
+            Anterior
+          </button>
+
+          <button
+            *ngFor="let page of pages"
+            (click)="goToPage(page)"
+            [class.bg-blue-500]="page === pageNumber"
+            [class.text-white]="page === pageNumber"
+            class="px-3 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md"
+          >
+            {{ page + 1 }}
+          </button>
+
+          <button
+            (click)="goToPage(pageNumber + 1)"
+            [disabled]="pageNumber === totalPages - 1"
+            class="px-3 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
+          >
+            Siguiente
+          </button>
+        </nav>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+        <div
+          *ngFor="let producto of productsList?.content; let i = index"
+          class="p-4 border border-gray-300 rounded-lg bg-gray-50 hover:bg-gray-100 transition-all"
+        >
+          <h4 class="font-medium text-gray-800">{{ producto.productName }}</h4>
+          <p class="text-sm text-gray-500">${{ producto.productPrice }}</p>
+          <p class="text-sm text-gray-500">
+            Cantidad disponible: {{ producto.quantity }}
+          </p>
+          <button
+            class="mt-2 w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition flex items-center justify-center"
+            (click)="addProduct(producto, i)"
+            [disabled]="blockButtonIndex == i || producto.quantity == 0"
+            [ngClass]="{
+              'bg-gray-300 cursor-not-allowed': producto.quantity == 0
+            }"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M3 3h2l3 9h8l3-9h2M3 3l4 12h10l4-12M3 3L1 7h22L21 3"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lado dere: Detalle del Pedido -->
+    <div
+      class="lg:w-3/10 p-6 bg-white shadow-lg rounded-lg border border-gray-200 mx-4 my-4 lg:my-0"
+    >
+      <h2 class="text-3xl font-semibold text-gray-800 mb-6">
+        Resumen del Pedido
+      </h2>
+
+      <ul class="space-y-4">
+        <li
+          *ngFor="let item of carProducts"
+          class="flex justify-between items-center py-4 px-6 bg-gray-50 border-b border-gray-300 rounded-lg"
+        >
+          <div class="flex-1">
+            <p class="text-lg font-medium text-gray-800">{{ item.name }}</p>
+            <p class="text-sm text-gray-600">Cantidad: {{ item.cantidad }}</p>
+          </div>
+          <div class="flex items-center space-x-2">
+            <span class="text-lg font-bold text-gray-900"
+              >${{ item.precio | number : "1.2-2" }}</span
+            >
+            <button
+              class="bg-red-500 text-white p-2 rounded-md text-sm hover:bg-red-600 transition flex items-center justify-center"
+              (click)="removeProduct(item.id, item)"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-5 h-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+        </li>
+      </ul>
+
+      <!-- Total a pagar -->
+      <div class="mt-6 flex justify-between items-center border-t pt-4">
+        <span class="text-lg font-semibold text-gray-800">Total a Pagar:</span>
+        <span class="text-2xl font-bold text-green-600"
+          >${{ totalToPay | number : "1.2-2" }}</span
+        >
+      </div>
+
+      <button
+        class="mt-8 w-full py-3 bg-green-500 text-white font-semibold rounded-md transition hover:bg-green-600 disabled:bg-gray-300"
+        (click)="generateOrder()"
+        [disabled]="carProducts.length == 0 || this.formGenerateOrder.invalid"
+      >
+        Generar Pedido
+      </button>
+    </div>
+  </div>
+</form>

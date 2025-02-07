@@ -1,0 +1,129 @@
+<link
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+  rel="stylesheet"
+/>
+<app-navbar></app-navbar>
+<div class="container mx-auto p-4">
+  <div class="overflow-x-auto bg-white shadow-xl rounded-lg">
+    <table class="min-w-full text-sm text-left text-gray-700">
+      <thead class="bg-blue-500 text-white">
+        <tr>
+          <th class="px-6 py-4 font-semibold">Orden</th>
+          <th class="px-6 py-4 font-semibold">Cliente</th>
+          <th class="px-6 py-4 font-semibold">Fecha</th>
+          <th class="px-6 py-4 font-semibold">Monto</th>
+          <th class="px-6 py-4 font-semibold">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let item of ordersList?.content"
+          class="border-b hover:bg-gray-50"
+        >
+          <td class="px-6 py-4">{{ item.orderId }}</td>
+          <td class="px-6 py-4">
+            {{ item.client }}
+          </td>
+          <td class="px-6 py-4">{{ item.dateInvoice }}</td>
+          <td class="px-6 py-4">{{ item.amount }}</td>
+          <td class="px-6 py-4 text-center">
+            <div class="flex justify-center space-x-4">
+              <button
+                class="bg-blue-200 text-blue-600 hover:bg-blue-400 focus:outline-none p-3 rounded-full"
+                (click)="viewOrder(item.orderId)"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  class="w-6 h-6"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M3 3h18v18H3z"
+                  />
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M7 6h10M7 12h10"
+                  />
+                </svg>
+              </button>
+              <button
+                class="bg-blue-200 text-blue-600 hover:bg-blue-400 focus:outline-none p-3 rounded-full"
+                (click)="dowloadOrder(item.orderId)"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                >
+                  <g fill="none" stroke="black" stroke-width="2">
+                    <line x1="12" y1="4" x2="12" y2="16" />
+                    <polyline points="8,12 12,16 16,12" />
+                    <line x1="12" y1="16" x2="12" y2="20" />
+                  </g>
+                </svg>
+              </button>
+
+              <button
+                class="bg-red-200 text-red-600 hover:bg-red-400 focus:outline-none p-3 rounded-full"
+                (click)="deleteOrder(item.orderId)"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  class="w-6 h-6"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  ></path>
+                </svg>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="flex justify-center mt-6">
+  <nav class="inline-flex items-center space-x-2">
+    <button
+      (click)="goToPage(pageNumber - 1)"
+      [disabled]="pageNumber === 0"
+      class="px-3 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
+    >
+      Anterior
+    </button>
+
+    <button
+      *ngFor="let page of pages"
+      (click)="goToPage(page)"
+      [class.bg-blue-500]="page === pageNumber"
+      [class.text-white]="page === pageNumber"
+      class="px-3 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md"
+    >
+      {{ page + 1 }}
+    </button>
+
+    <button
+      (click)="goToPage(pageNumber + 1)"
+      [disabled]="pageNumber === totalPages - 1"
+      class="px-3 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
+    >
+      Siguiente
+    </button>
+  </nav>
+</div>

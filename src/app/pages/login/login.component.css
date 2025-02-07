@@ -1,0 +1,30 @@
+/* Estilo para el spinner */
+button {
+  position: relative; /* Necesario para posicionar el spinner sobre el botón */
+}
+
+button svg {
+  position: absolute; /* Colocamos el spinner sobre el botón */
+  top: 50%; /* Centrado verticalmente */
+  left: 50%; /* Centrado horizontalmente */
+  transform: translate(-50%, -50%) scale(1); /* Ajuste para un centrado perfecto */
+  width: 24px; /* Establecemos un tamaño fijo para el spinner */
+  height: 24px; /* Establecemos un tamaño fijo para el spinner */
+  animation: spin 1s linear infinite; /* Animación de rotación infinita */
+}
+
+/* Animación de rotación */
+@keyframes spin {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+/* Aseguramos que el tamaño del botón no se vea alterado */
+button {
+  padding-left: 16px;
+  padding-right: 16px;
+}

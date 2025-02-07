@@ -1,0 +1,220 @@
+<div class="w-full max-w-lg p-8 bg-white shadow-lg rounded-lg mx-auto mt-16">
+  <h2 class="text-3xl font-semibold text-center text-gray-800 mb-6">
+    Formulario de Registro
+  </h2>
+
+  <form [formGroup]="formRegister">
+    <div class="space-y-4">
+      <div>
+        <label for="firstname" class="block text-sm font-medium text-gray-700"
+          >Nombre</label
+        >
+        <input
+          type="text"
+          id="firstname"
+          name="firstname"
+          required
+          class="mt-2 block w-full px-4 py-3 rounded-md border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+          formControlName="firstname"
+          placeholder="Tu nombre completo"
+          [ngClass]="{ 'border-red-500': hasErrors('firstname', 'required') }"
+        />
+        @if(hasErrors('firstname', 'required')){
+        <span class="text-red-500">Este campo es requerido</span>
+        }
+      </div>
+      <div>
+        <label for="lastname" class="block text-sm font-medium text-gray-700"
+          >Apellido</label
+        >
+        <input
+          type="text"
+          id="lastname"
+          name="lastname"
+          required
+          class="mt-2 block w-full px-4 py-3 rounded-md border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+          formControlName="lastname"
+          placeholder="Tu apellido completo"
+          [ngClass]="{ 'border-red-500': hasErrors('lastname', 'required') }"
+        />
+        @if(hasErrors('lastname', 'required')){
+        <span class="text-red-500">Este campo es requerido</span>
+        }
+      </div>
+
+      <div>
+        <label for="username" class="block text-sm font-medium text-gray-700"
+          >Usuario</label
+        >
+        <input
+          type="text"
+          id="username"
+          name="username"
+          required
+          class="mt-2 block w-full px-4 py-3 rounded-md border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+          formControlName="username"
+          placeholder="Nombre de usuario para login"
+          [ngClass]="{ 'border-red-500': hasErrors('username', 'required') }"
+        />
+        @if(hasErrors('username', 'required')){
+        <span class="text-red-500">Este campo es requerido</span>
+        }
+      </div>
+
+      <div>
+        <label for="email" class="block text-sm font-medium text-gray-700"
+          >Correo Electrónico</label
+        >
+        <input
+          type="email"
+          id="email"
+          name="email"
+          required
+          class="mt-2 block w-full px-4 py-3 rounded-md border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+          formControlName="email"
+          placeholder="Tu correo electrónico"
+          [ngClass]="{
+            'border-red-500':
+              hasErrors('email', 'required') || hasErrors('email', 'email')
+          }"
+        />
+        @if(hasErrors('email', 'required')){
+        <span class="text-red-500">Este campo es requerido</span>
+        } @if(hasErrors('email', 'email')){
+        <span class="text-red-500">Formato de correo inválido</span>
+        }
+      </div>
+
+      <div>
+        <label for="password" class="block text-sm font-medium text-gray-700"
+          >Contraseña</label
+        >
+        <span class="text-red-500 text-xs"
+          >Tu contraseña debe tener al menos 8 caracteres, incluyendo una
+          mayúscula, una minúscula, un número y un carácter especial</span
+        >
+        <input
+          type="password"
+          id="password"
+          name="password"
+          required
+          class="mt-2 block w-full px-4 py-3 rounded-md border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+          formControlName="password"
+          placeholder="Tu contraseña"
+          [ngClass]="{ 'border-red-500': hasErrors('password', 'required') }"
+        />
+        @if(hasErrors('password', 'required')){
+        <span class="text-red-500">Este campo es requerido</span>
+        }
+      </div>
+
+      <div>
+        <label for="phone" class="block text-sm font-medium text-gray-700"
+          >Teléfono</label
+        >
+        <input
+          type="tel"
+          id="phone"
+          name="phone"
+          class="mt-2 block w-full px-4 py-3 rounded-md border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+          formControlName="phone"
+          placeholder="Tu teléfono"
+          [ngClass]="{
+            'border-red-500':
+              hasErrors('phone', 'required') ||
+              hasErrors('phone', 'minlength') ||
+              hasErrors('phone', 'maxlength')
+          }"
+        />
+        @if(hasErrors('phone', 'required')){
+        <span class="text-red-500">Este campo es requerido</span>
+        } @if(hasErrors('phone', 'minlength')){
+        <span class="text-red-500">Debes ingresar 10 dígitos</span>
+        } @if(hasErrors('phone', 'maxlength')){
+        <span class="text-red-500">No puedes ingresar más de 10 dígitos</span>
+        }
+      </div>
+      <div>
+        <label for="dni" class="block text-sm font-medium text-gray-700"
+          >Documento de identidad</label
+        >
+        <input
+          type="text"
+          id="dni"
+          name="dni"
+          required
+          class="mt-2 block w-full px-4 py-3 rounded-md border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+          formControlName="dni"
+          placeholder="Tu cédula de identidad"
+          [ngClass]="{
+            'border-red-500':
+              hasErrors('dni', 'required') ||
+              hasErrors('dni', 'minlength') ||
+              hasErrors('dni', 'maxlength')
+          }"
+        />
+        @if(hasErrors('dni', 'required')){
+        <span class="text-red-500">Este campo es requerido</span>
+        }@if(hasErrors('dni', 'minlength')){
+        <span class="text-red-500">Debes ingresar 10 dígitos</span>
+        } @if(hasErrors('dni', 'maxlength')){
+        <span class="text-red-500">No puedes ingresar más de 10 dígitos</span>
+        }
+      </div>
+      <div>
+        <label for="address" class="block text-sm font-medium text-gray-700"
+          >Dirección domiciliaria</label
+        >
+        <input
+          type="text"
+          id="address"
+          name="address"
+          required
+          class="mt-2 block w-full px-4 py-3 rounded-md border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+          formControlName="address"
+          placeholder="Vernaza norte mz 7 v 26"
+          [ngClass]="{ 'border-red-500': hasErrors('address', 'required') }"
+        />
+        @if(hasErrors('address', 'required')){
+        <span class="text-red-500">Este campo es requerido</span>
+        }
+      </div>
+
+      <!-- Aceptación de términos -->
+      <!-- <div class="flex items-center">
+        <input
+          type="checkbox"
+          id="terms"
+          name="terms"
+          required
+          class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+        />
+        <label for="terms" class="ml-2 text-sm text-gray-600"
+          >Acepto los términos y condiciones</label
+        >
+      </div> -->
+
+      <button
+        (click)="register()"
+        type="submit"
+        class="w-full py-2 bg-indigo-500 text-white font-semibold rounded-lg hover:bg-indigo-600 transition duration-300 ease-in-out"
+        [ngClass]="{
+          'bg-red-100 hover:bg-red-100': formRegister.invalid,
+          'animate-pulse': loading
+        }"
+      >
+        <span>{{ !loading ? "Registrame" : "..." }}</span>
+      </button>
+    </div>
+  </form>
+  <div class="mt-4 text-center">
+    <p class="text-sm text-gray-600">
+      ¿Ya tienes una cuenta?
+      <a
+        class="text-indigo-500 hover:text-indigo-600 cursor-pointer"
+        (click)="goLoginForm()"
+        >Inicia sesión</a
+      >
+    </p>
+  </div>
+</div>
